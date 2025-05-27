@@ -220,43 +220,6 @@ class ExpenseDetailScreen extends StatelessWidget {
                       ),
                     );
                   }).toList(),
-
-                  // Receipt images
-                  if (expense.receiptUrls != null && expense.receiptUrls!.isNotEmpty) ...[
-                    const SizedBox(height: 24),
-                    Text(
-                      'Фото чеков',
-                      style: Theme.of(context).textTheme.titleLarge,
-                    ),
-                    const SizedBox(height: 16),
-                    SizedBox(
-                      height: 200,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: expense.receiptUrls!.length,
-                        itemBuilder: (context, index) {
-                          return GestureDetector(
-                            onTap: () {
-                              // TODO: Open full screen image
-                            },
-                            child: Container(
-                              margin: const EdgeInsets.only(right: 8),
-                              width: 150,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                image: DecorationImage(
-                                  image: NetworkImage(expense.receiptUrls![index]),
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                  ],
-
-                  const SizedBox(height: 24),
                   
                   // Your balance
                   if (currentUser != null) ...[

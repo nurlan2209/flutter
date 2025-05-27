@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
-import 'package:image_picker/image_picker.dart';
-import 'dart:io';
 import '../../../data/providers/auth_provider.dart';
 import '../../../data/providers/group_provider.dart';
 import '../../../data/providers/expense_provider.dart';
@@ -37,8 +35,6 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
   DateTime _selectedDate = DateTime.now();
   SplitType _splitType = SplitType.equal;
   Map<String, double> _splitAmounts = {};
-  List<File> _receiptImages = [];
-  final _imagePicker = ImagePicker();
 
   @override
   void initState() {
@@ -55,23 +51,6 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
     super.dispose();
   }
 
-  Future<void> _pickImage() async {
-    final pickedFile = await _imagePicker.pickImage(source: ImageSource.camera);
-    if (pickedFile != null) {
-      setState(() {
-        _receiptImages.add(File(pickedFile.path));
-      });
-    }
-  }
-
-  Future<void> _pickImageFromGallery() async {
-    final pickedFile = await _imagePicker.pickImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
-      setState(() {
-        _receiptImages.add(File(pickedFile.path));
-      });
-    }
-  }
 
   void _showSplitOptions() {
     if (_selectedGroupId == null) {
@@ -149,8 +128,6 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
         final currentUser = context.read<AuthProvider>().currentUser!;
         final expenseId = const Uuid().v4();
         
-        // TODO: Upload receipt images to Firebase Storage
-        
         final expense = ExpenseModel(
           id: expenseId,
           groupId: _selectedGroupId!,
@@ -159,12 +136,11 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
               ? null
               : _descriptionController.text.trim(),
           amount: double.parse(_amountController.text),
-          currency: 'RUB', // TODO: Add currency selection
+          currency: 'RUB',
           paidBy: _selectedPaidBy!,
           splitAmounts: _splitAmounts,
           splitType: _splitType,
           category: _selectedCategory?.id,
-          receiptUrls: [], // TODO: Add uploaded URLs
           date: _selectedDate,
           createdAt: DateTime.now(),
           createdBy: currentUser.id,
@@ -375,85 +351,8 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
               prefixIcon: Icons.note,
               maxLines: 3,
             ),
-            const SizedBox(height: 16),
-
-            // Receipt images
-            Text(
-              'Фото чека',
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-            const SizedBox(height: 8),
-            if (_receiptImages.isNotEmpty) ...[
-              SizedBox(
-                height: 100,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: _receiptImages.length,
-                  itemBuilder: (context, index) {
-                    return Stack(
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.only(right: 8),
-                          width: 100,
-                          height: 100,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            image: DecorationImage(
-                              image: FileImage(_receiptImages[index]),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          top: 4,
-                          right: 12,
-                          child: GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                _receiptImages.removeAt(index);
-                              });
-                            },
-                            child: Container(
-                              padding: const EdgeInsets.all(4),
-                              decoration: const BoxDecoration(
-                                color: Colors.red,
-                                shape: BoxShape.circle,
-                              ),
-                              child: const Icon(
-                                Icons.close,
-                                size: 16,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    );
-                  },
-                ),
-              ),
-              const SizedBox(height: 8),
-            ],
-            Row(
-              children: [
-                Expanded(
-                  child: OutlinedButton.icon(
-                    onPressed: _pickImage,
-                    icon: const Icon(Icons.camera_alt),
-                    label: const Text('Камера'),
-                  ),
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: OutlinedButton.icon(
-                    onPressed: _pickImageFromGallery,
-                    icon: const Icon(Icons.photo),
-                    label: const Text('Галерея'),
-                  ),
-                ),
-              ],
-            ),
             const SizedBox(height: 32),
+
 
             // Create button
             Consumer<ExpenseProvider>(

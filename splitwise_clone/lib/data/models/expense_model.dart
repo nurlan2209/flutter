@@ -13,7 +13,6 @@ class ExpenseModel {
   final Map<String, double> splitAmounts; // userId: amount
   final SplitType splitType;
   final String? category;
-  final List<String>? receiptUrls;
   final DateTime date;
   final DateTime createdAt;
   final String createdBy;
@@ -30,7 +29,6 @@ class ExpenseModel {
     required this.splitAmounts,
     required this.splitType,
     this.category,
-    this.receiptUrls,
     required this.date,
     required this.createdAt,
     required this.createdBy,
@@ -54,7 +52,6 @@ class ExpenseModel {
         orElse: () => SplitType.equal,
       ),
       category: map['category'],
-      receiptUrls: List<String>.from(map['receiptUrls'] ?? []),
       date: (map['date'] as Timestamp).toDate(),
       createdAt: (map['createdAt'] as Timestamp).toDate(),
       createdBy: map['createdBy'] ?? '',
@@ -73,7 +70,6 @@ class ExpenseModel {
       'splitAmounts': splitAmounts,
       'splitType': splitType.toString().split('.').last,
       'category': category,
-      'receiptUrls': receiptUrls,
       'date': Timestamp.fromDate(date),
       'createdAt': Timestamp.fromDate(createdAt),
       'createdBy': createdBy,
@@ -89,5 +85,24 @@ class ExpenseModel {
     } else {
       return -getUserShare(userId);
     }
+  }
+  
+  ExpenseModel copyWith({String? id}) {
+    return ExpenseModel(
+      id: id ?? this.id,
+      groupId: groupId,
+      title: title,
+      description: description,
+      amount: amount,
+      currency: currency,
+      paidBy: paidBy,
+      splitAmounts: splitAmounts,
+      splitType: splitType,
+      category: category,
+      date: date,
+      createdAt: createdAt,
+      createdBy: createdBy,
+      metadata: metadata,
+    );
   }
 }
