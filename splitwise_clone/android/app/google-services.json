@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "719712897114",
+    "project_id": "splitwise-clone-9f994",
+    "storage_bucket": "splitwise-clone-9f994.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:719712897114:android:37a09ccfc67fcdec6eb063",
+        "android_client_info": {
+          "package_name": "com.example.splitwise_clone"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3NbZF-MaJ_Z6fCIXRj68sasr0QuK16Vg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
