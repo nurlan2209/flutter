@@ -10,6 +10,7 @@ import '../../../data/models/category_model.dart';
 import '../../widgets/common/custom_text_field.dart';
 import '../../widgets/common/custom_button.dart';
 import 'widgets/split_options_sheet.dart';
+import '../../../core/utils/date_utils.dart' as AppDateUtils;
 
 class AddExpenseScreen extends StatefulWidget {
   final String? preselectedGroupId;
@@ -288,7 +289,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
             // Date
             ListTile(
               title: const Text('Дата'),
-              subtitle: Text(DateUtils.formatDate(_selectedDate)),
+              Text(AppDateUtils.formatDate(_selectedDate)),
               leading: const Icon(Icons.calendar_today),
               trailing: const Icon(Icons.chevron_right),
               onTap: _selectDate,

@@ -11,6 +11,7 @@ import '../../widgets/common/loading_widget.dart';
 import '../expenses/add_expense_screen.dart';
 import '../expenses/expense_detail_screen.dart';
 import 'widgets/group_members_sheet.dart';
+import '../../../core/utils/date_utils.dart' as AppDateUtils;
 
 class GroupDetailScreen extends StatefulWidget {
   final String groupId;
@@ -324,7 +325,7 @@ class _ExpenseListItem extends StatelessWidget {
                   ),
                   const SizedBox(width: 4),
                   Text(
-                    DateUtils.formatDate(expense.date),
+                    AppDateUtils.formatDate(expense.date),
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color: Colors.grey[600],
                     ),

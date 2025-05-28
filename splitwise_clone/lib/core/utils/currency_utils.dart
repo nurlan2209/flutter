@@ -2,7 +2,7 @@ import 'package:intl/intl.dart';
 
 class CurrencyUtils {
   static final Map<String, String> currencySymbols = {
-    'USD': '\,
+    'USD': '\$',  // Убрал лишний экранирующий слеш
     'EUR': '€',
     'GBP': '£',
     'RUB': '₽',

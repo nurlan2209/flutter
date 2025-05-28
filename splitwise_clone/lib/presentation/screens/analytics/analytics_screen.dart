@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:fl_chart/fl_chart.dart';
 import '../../../data/providers/auth_provider.dart';
 import '../../../data/providers/expense_provider.dart';
 import '../../../data/providers/group_provider.dart';
 import '../../../data/models/expense_model.dart';
-import '../../../data/models/category_model.dart';
 import '../../../core/utils/currency_utils.dart';
 import '../../../core/utils/date_utils.dart';
 import 'widgets/expense_pie_chart.dart';
 import 'widgets/expense_line_chart.dart';
 import 'widgets/expense_insights.dart';
+import '../../../core/utils/date_utils.dart' as AppDateUtils;
 
 class AnalyticsScreen extends StatefulWidget {
   const AnalyticsScreen({Key? key}) : super(key: key);
@@ -161,7 +160,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                                   const SizedBox(width: 8),
                                   Expanded(
                                     child: Text(
-                                      '${DateUtils.formatShortDate(_selectedDateRange.start)} - ${DateUtils.formatShortDate(_selectedDateRange.end)}',
+                                    '${AppDateUtils.formatShortDate(_selectedDateRange.start)} - ${AppDateUtils.formatShortDate(_selectedDateRange.end)}',
                                     ),
                                   ),
                                   const Icon(Icons.arrow_drop_down),

@@ -8,6 +8,7 @@ import '../../../data/providers/auth_provider.dart';
 import '../../../core/utils/currency_utils.dart';
 import '../../../core/utils/date_utils.dart';
 import '../../widgets/common/custom_button.dart';
+import '../../../core/utils/date_utils.dart' as AppDateUtils;
 
 class ExpenseDetailScreen extends StatelessWidget {
   final ExpenseModel expense;
@@ -157,7 +158,7 @@ class ExpenseDetailScreen extends StatelessWidget {
                   _InfoCard(
                     icon: Icons.calendar_today,
                     title: 'Дата',
-                    value: DateUtils.formatDateTime(expense.date),
+                    value: AppDateUtils.formatDateTime(expense.date),
                   ),
                   if (expense.description != null) ...[
                     const SizedBox(height: 12),

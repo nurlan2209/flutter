@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:ui';
 
 class ThemeProvider extends ChangeNotifier {
   static const String _themeKey = 'theme_mode';
@@ -10,7 +11,8 @@ class ThemeProvider extends ChangeNotifier {
   
   bool get isDarkMode {
     if (_themeMode == ThemeMode.system) {
-      return WidgetsBinding.instance.window.platformBrightness == Brightness.dark;
+      final brightness = PlatformDispatcher.instance.platformBrightness;
+      return brightness == Brightness.dark;
     }
     return _themeMode == ThemeMode.dark;
   }

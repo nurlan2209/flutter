@@ -20,7 +20,7 @@ class AppThemes {
         ),
       ),
     ),
-    cardTheme: CardTheme(
+    cardTheme: CardThemeData( // Исправлено с CardTheme на CardThemeData
       elevation: 2,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
@@ -52,7 +52,7 @@ class AppThemes {
         ),
       ),
     ),
-    cardTheme: CardTheme(
+    cardTheme: CardThemeData( // Исправлено с CardTheme на CardThemeData
       elevation: 2,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),

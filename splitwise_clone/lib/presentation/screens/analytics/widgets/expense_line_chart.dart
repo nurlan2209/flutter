@@ -3,6 +3,7 @@ import 'package:fl_chart/fl_chart.dart';
 import '../../../../data/models/expense_model.dart';
 import '../../../../core/utils/currency_utils.dart';
 import '../../../../core/utils/date_utils.dart';
+import 'package:intl/intl.dart';
 
 class ExpenseLineChart extends StatelessWidget {
   final List<ExpenseModel> expenses;

@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../models/expense_model.dart';
-import '../models/debt_model.dart';
 
 class ExpenseRepository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -31,7 +30,7 @@ class ExpenseRepository {
         .snapshots()
         .map((snapshot) {
       return snapshot.docs
-          .map((doc) => ExpenseModel.fromMap(doc.data(), doc.id))
+          .map((doc) => ExpenseModel.fromMap(doc.data() as Map<String, dynamic>, doc.id))
           .toList();
     });
   }
@@ -48,7 +47,7 @@ class ExpenseRepository {
         .snapshots()
         .map((snapshot) {
       return snapshot.docs
-          .map((doc) => ExpenseModel.fromMap(doc.data(), doc.id))
+          .map((doc) => ExpenseModel.fromMap(doc.data() as Map<String, dynamic>, doc.id))
           .where((expense) => 
               expense.paidBy == userId || 
               expense.splitAmounts.containsKey(userId))
@@ -67,8 +66,6 @@ class ExpenseRepository {
     // Get expense details first
     final doc = await _firestore.collection('expenses').doc(expenseId).get();
     if (!doc.exists) return;
-    
-    final expense = ExpenseModel.fromMap(doc.data()!, doc.id);
     
     // Delete related debts
     final debts = await _firestore

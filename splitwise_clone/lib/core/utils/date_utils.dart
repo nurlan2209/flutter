@@ -1,6 +1,6 @@
 import 'package:intl/intl.dart';
 
-class DateUtils {
+class AppDateUtils {
   static String formatDate(DateTime date) {
     final now = DateTime.now();
     final difference = now.difference(date);
