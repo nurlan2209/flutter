@@ -3,12 +3,11 @@ import 'package:provider/provider.dart';
 import '../../../data/providers/auth_provider.dart';
 import '../../../data/providers/group_provider.dart';
 import '../../../data/models/group_model.dart';
-import '../../widgets/common/loading_widget.dart';
 import 'create_group_screen.dart';
 import 'group_detail_screen.dart';
 
 class GroupsScreen extends StatelessWidget {
-  const GroupsScreen({Key? key}) : super(key: key);
+  const GroupsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -102,9 +101,9 @@ class _GroupCard extends StatelessWidget {
   final GroupModel group;
 
   const _GroupCard({
-    Key? key,
+    super.key,
     required this.group,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -126,7 +125,7 @@ class _GroupCard extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: 30,
-                backgroundColor: Theme.of(context).primaryColor.withOpacity(0.1),
+                backgroundColor: Theme.of(context).primaryColor.withValues(alpha: 0.1),
                 child: group.photoUrl != null
                     ? ClipRRect(
                         borderRadius: BorderRadius.circular(30),

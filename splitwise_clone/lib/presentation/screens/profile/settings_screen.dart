@@ -5,7 +5,7 @@ import '../../../data/providers/theme_provider.dart';
 import '../../widgets/common/custom_button.dart';
 
 class SettingsScreen extends StatefulWidget {
-  const SettingsScreen({Key? key}) : super(key: key);
+  const SettingsScreen({super.key});
 
   @override
   State<SettingsScreen> createState() => _SettingsScreenState();

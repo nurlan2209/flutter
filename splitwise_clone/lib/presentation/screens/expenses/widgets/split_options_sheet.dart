@@ -13,13 +13,13 @@ class SplitOptionsSheet extends StatefulWidget {
   final Function(SplitType, Map<String, double>) onSplitChanged;
 
   const SplitOptionsSheet({
-    Key? key,
+    super.key,
     required this.group,
     required this.totalAmount,
     required this.currentSplitType,
     required this.currentSplitAmounts,
     required this.onSplitChanged,
-  }) : super(key: key);
+  });
 
   @override
   State<SplitOptionsSheet> createState() => _SplitOptionsSheetState();
@@ -219,7 +219,7 @@ class _SplitOptionsSheetState extends State<SplitOptionsSheet> {
                   color: Theme.of(context).cardColor,
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
+                      color: Colors.black.withValues(alpha: 0.1),
                       blurRadius: 4,
                       offset: const Offset(0, -2),
                     ),
@@ -258,11 +258,11 @@ class _SplitTypeChip extends StatelessWidget {
   final VoidCallback onTap;
 
   const _SplitTypeChip({
-    Key? key,
+    super.key,
     required this.label,
     required this.isSelected,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

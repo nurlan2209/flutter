@@ -3,14 +3,13 @@ import 'package:provider/provider.dart';
 import '../../../data/providers/auth_provider.dart';
 import '../../../data/providers/expense_provider.dart';
 import '../../../data/providers/group_provider.dart';
-import '../../../data/models/debt_model.dart';
 import '../../../core/utils/currency_utils.dart';
 import '../../widgets/debt_card.dart';
 import '../../widgets/common/loading_widget.dart';
 import '../expenses/add_expense_screen.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -33,7 +32,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final authProvider = context.watch<AuthProvider>();
-    final expenseProvider = context.watch<ExpenseProvider>();
     final groupProvider = context.watch<GroupProvider>();
     final currentUser = authProvider.currentUser;
 
@@ -228,7 +226,7 @@ class _HomeScreenState extends State<HomeScreen> {
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: color.withOpacity(0.1),
+                color: color.withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
               child: Icon(icon, color: color),

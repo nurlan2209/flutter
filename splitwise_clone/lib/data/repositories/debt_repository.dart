@@ -72,7 +72,7 @@ class DebtRepository {
       final doc = await _firestore.collection('debts').doc(debtId).get();
       if (!doc.exists) throw Exception('Долг не найден');
       
-      final debt = DebtModel.fromMap(doc.data()!, doc.id); // Исправлено: добавлен !
+      final debt = DebtModel.fromMap(doc.data()!, doc.id);
       final newSettledAmount = debt.settledAmount + amount;
       final settlements = debt.settlements ?? [];
       
@@ -117,9 +117,10 @@ class DebtRepository {
       final batch = _firestore.batch();
       
       for (var doc in [...debts1.docs, ...debts2.docs]) {
+        final debt = DebtModel.fromMap(doc.data() as Map<String, dynamic>, doc.id);
         batch.update(doc.reference, {
           'status': 'settled',
-          final debt = DebtModel.fromMap(doc.data() as Map<String, dynamic>, doc.id);,
+          'settledAmount': debt.amount,
           'lastUpdatedAt': FieldValue.serverTimestamp(),
         });
       }

@@ -7,6 +7,7 @@ import '../repositories/user_repository.dart';
 class GroupProvider extends ChangeNotifier {
   final GroupRepository _groupRepository = GroupRepository();
   final UserRepository _userRepository = UserRepository();
+  final Map<String, UserModel> _groupMembers = {};
   
   List<GroupModel> _groups = [];
   GroupModel? _selectedGroup;

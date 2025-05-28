@@ -8,9 +8,9 @@ class ExpensePieChart extends StatefulWidget {
   final List<ExpenseModel> expenses;
 
   const ExpensePieChart({
-    Key? key,
+    super.key,
     required this.expenses,
-  }) : super(key: key);
+  });
 
   @override
   State<ExpensePieChart> createState() => _ExpensePieChartState();
@@ -145,7 +145,7 @@ class _ExpensePieChartState extends State<ExpensePieChart> {
                     borderRadius: BorderRadius.circular(8),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
+                        color: Colors.black.withValues(alpha: 0.1),
                         blurRadius: 4,
                       ),
                     ],

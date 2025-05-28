@@ -1,24 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
+import 'package:intl/intl.dart';
 import '../../../data/providers/auth_provider.dart';
 import '../../../data/providers/group_provider.dart';
 import '../../../data/providers/expense_provider.dart';
 import '../../../data/models/expense_model.dart';
-import '../../../data/models/group_model.dart';
 import '../../../data/models/category_model.dart';
 import '../../widgets/common/custom_text_field.dart';
 import '../../widgets/common/custom_button.dart';
 import 'widgets/split_options_sheet.dart';
-import '../../../core/utils/date_utils.dart' as AppDateUtils;
 
 class AddExpenseScreen extends StatefulWidget {
   final String? preselectedGroupId;
 
   const AddExpenseScreen({
-    Key? key,
+    super.key,
     this.preselectedGroupId,
-  }) : super(key: key);
+  });
 
   @override
   State<AddExpenseScreen> createState() => _AddExpenseScreenState();
@@ -51,7 +50,6 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
     _descriptionController.dispose();
     super.dispose();
   }
-
 
   void _showSplitOptions() {
     if (_selectedGroupId == null) {
@@ -174,8 +172,6 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
   @override
   Widget build(BuildContext context) {
     final groupProvider = context.watch<GroupProvider>();
-    final authProvider = context.watch<AuthProvider>();
-    final currentUser = authProvider.currentUser;
 
     return Scaffold(
       appBar: AppBar(
@@ -279,7 +275,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                   },
                   backgroundColor: isSelected
                       ? Color(int.parse(category.color.replaceAll('#', '0xFF')))
-                          .withOpacity(0.2)
+                          .withValues(alpha: 0.2)
                       : null,
                 );
               }).toList(),
@@ -289,7 +285,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
             // Date
             ListTile(
               title: const Text('Дата'),
-              Text(AppDateUtils.formatDate(_selectedDate)),
+              subtitle: Text(DateFormat('d MMMM yyyy').format(_selectedDate)),
               leading: const Icon(Icons.calendar_today),
               trailing: const Icon(Icons.chevron_right),
               onTap: _selectDate,
@@ -353,7 +349,6 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
               maxLines: 3,
             ),
             const SizedBox(height: 32),
-
 
             // Create button
             Consumer<ExpenseProvider>(

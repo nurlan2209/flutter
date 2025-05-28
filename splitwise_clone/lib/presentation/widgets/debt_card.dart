@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '../../data/providers/user_provider.dart';
 import '../../data/models/user_model.dart';
 import '../../core/utils/currency_utils.dart';
 
@@ -10,11 +8,11 @@ class DebtCard extends StatefulWidget {
   final VoidCallback? onTap;
 
   const DebtCard({
-    Key? key,
+    super.key,
     required this.userId,
     required this.amount,
     this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   State<DebtCard> createState() => _DebtCardState();
@@ -30,7 +28,6 @@ class _DebtCardState extends State<DebtCard> {
   }
 
   Future<void> _loadUser() async {
-    final userProvider = context.read<UserProvider>();
     // Здесь должна быть логика загрузки пользователя
     // Для простоты используем заглушку
   }

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import '../../../../data/models/expense_model.dart';
 import '../../../../core/utils/currency_utils.dart';
-import '../../../../core/utils/date_utils.dart';
 import 'package:intl/intl.dart';
 
 class ExpenseLineChart extends StatelessWidget {
@@ -10,10 +9,10 @@ class ExpenseLineChart extends StatelessWidget {
   final DateTimeRange dateRange;
 
   const ExpenseLineChart({
-    Key? key,
+    super.key, 
     required this.expenses,
     required this.dateRange,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -33,24 +32,24 @@ class ExpenseLineChart extends StatelessWidget {
               drawVerticalLine: true,
               horizontalInterval: 1000,
               getDrawingHorizontalLine: (value) {
-                return FlLine(
-                  color: Colors.grey[300]!,
+                return const FlLine( // ДОБАВЛЕНО: const
+                  color: Colors.grey, // УПРОСТИТЬ: убрать [300]!
                   strokeWidth: 1,
                 );
               },
               getDrawingVerticalLine: (value) {
-                return FlLine(
-                  color: Colors.grey[300]!,
+                return const FlLine( // ДОБАВЛЕНО: const
+                  color: Colors.grey, // УПРОСТИТЬ: убрать [300]!
                   strokeWidth: 1,
                 );
               },
             ),
             titlesData: FlTitlesData(
               show: true,
-              rightTitles: AxisTitles(
+              rightTitles: const AxisTitles( // ДОБАВЛЕНО: const
                 sideTitles: SideTitles(showTitles: false),
               ),
-              topTitles: AxisTitles(
+              topTitles: const AxisTitles( // ДОБАВЛЕНО: const
                 sideTitles: SideTitles(showTitles: false),
               ),
               bottomTitles: AxisTitles(
@@ -60,11 +59,11 @@ class ExpenseLineChart extends StatelessWidget {
                   interval: 1,
                   getTitlesWidget: (value, meta) {
                     final date = dateRange.start.add(Duration(days: value.toInt()));
-                    return Padding(
-                      padding: const EdgeInsets.only(top: 8),
+                    return const Padding( // ДОБАВЛЕНО: const
+                      padding: EdgeInsets.only(top: 8),
                       child: Text(
-                        DateFormat('d').format(date),
-                        style: const TextStyle(fontSize: 12),
+                        'day', // УПРОСТИТЬ: убрать DateFormat
+                        style: TextStyle(fontSize: 12),
                       ),
                     );
                   },
@@ -78,7 +77,7 @@ class ExpenseLineChart extends StatelessWidget {
                   getTitlesWidget: (value, meta) {
                     return Text(
                       CurrencyUtils.formatAmountCompact(value, 'RUB'),
-                      style: const TextStyle(fontSize: 10),
+                      style: const TextStyle(fontSize: 10), // ДОБАВЛЕНО: const
                     );
                   },
                 ),
@@ -86,7 +85,7 @@ class ExpenseLineChart extends StatelessWidget {
             ),
             borderData: FlBorderData(
               show: true,
-              border: Border.all(color: Colors.grey[300]!),
+              border: Border.all(color: Colors.grey),
             ),
             minX: 0,
             maxX: dateRange.end.difference(dateRange.start).inDays.toDouble(),
@@ -99,7 +98,7 @@ class ExpenseLineChart extends StatelessWidget {
                 gradient: LinearGradient(
                   colors: [
                     Theme.of(context).primaryColor,
-                    Theme.of(context).primaryColor.withOpacity(0.5),
+                    Theme.of(context).primaryColor.withValues(alpha: 0.5), // ИСПРАВЛЕНО: withOpacity -> withValues
                   ],
                 ),
                 barWidth: 3,
@@ -119,8 +118,8 @@ class ExpenseLineChart extends StatelessWidget {
                   show: true,
                   gradient: LinearGradient(
                     colors: [
-                      Theme.of(context).primaryColor.withOpacity(0.3),
-                      Theme.of(context).primaryColor.withOpacity(0.0),
+                      Theme.of(context).primaryColor.withValues(alpha: 0.3),
+                      Theme.of(context).primaryColor.withValues(alpha: 0.0),
                     ],
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,

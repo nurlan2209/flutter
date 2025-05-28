@@ -1,25 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 import '../../../data/providers/auth_provider.dart';
 import '../../../data/providers/group_provider.dart';
 import '../../../data/providers/expense_provider.dart';
 import '../../../data/models/group_model.dart';
 import '../../../data/models/expense_model.dart';
 import '../../../core/utils/currency_utils.dart';
-import '../../../core/utils/date_utils.dart';
-import '../../widgets/common/loading_widget.dart';
 import '../expenses/add_expense_screen.dart';
 import '../expenses/expense_detail_screen.dart';
 import 'widgets/group_members_sheet.dart';
-import '../../../core/utils/date_utils.dart' as AppDateUtils;
 
 class GroupDetailScreen extends StatefulWidget {
   final String groupId;
 
   const GroupDetailScreen({
-    Key? key,
+    super.key,
     required this.groupId,
-  }) : super(key: key);
+  });
 
   @override
   State<GroupDetailScreen> createState() => _GroupDetailScreenState();
@@ -33,11 +31,14 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> {
   }
 
   Future<void> _loadGroupData() async {
+    if (!mounted) return; // ДОБАВИТЬ проверку
     await context.read<GroupProvider>().selectGroup(widget.groupId);
+    
+    if (!mounted) return; // ДОБАВИТЬ проверку
     context.read<ExpenseProvider>().loadGroupExpenses(widget.groupId);
     
     final userId = context.read<AuthProvider>().currentUser?.id;
-    if (userId != null) {
+    if (userId != null && mounted) { // ДОБАВИТЬ проверку
       context.read<ExpenseProvider>().loadSimplifiedDebts(
         userId,
         groupId: widget.groupId,
@@ -48,7 +49,6 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> {
   @override
   Widget build(BuildContext context) {
     final groupProvider = context.watch<GroupProvider>();
-    final expenseProvider = context.watch<ExpenseProvider>();
     final currentUser = context.read<AuthProvider>().currentUser;
     final group = groupProvider.selectedGroup;
 
@@ -255,10 +255,10 @@ class _ExpenseListItem extends StatelessWidget {
   final String currentUserId;
 
   const _ExpenseListItem({
-    Key? key,
+    super.key,
     required this.expense,
     required this.currentUserId,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -325,7 +325,7 @@ class _ExpenseListItem extends StatelessWidget {
                   ),
                   const SizedBox(width: 4),
                   Text(
-                    AppDateUtils.formatDate(expense.date),
+                    DateFormat('d MMMM yyyy').format(expense.date),
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color: Colors.grey[600],
                     ),
@@ -338,8 +338,8 @@ class _ExpenseListItem extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
                     color: userBalance > 0
-                        ? Colors.green.withOpacity(0.1)
-                        : Colors.red.withOpacity(0.1),
+                        ? Colors.green.withValues(alpha: 0.1)
+                        : Colors.red.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(4),
                   ),
                   child: Text(

@@ -30,7 +30,7 @@ class ExpenseRepository {
         .snapshots()
         .map((snapshot) {
       return snapshot.docs
-          .map((doc) => ExpenseModel.fromMap(doc.data() as Map<String, dynamic>, doc.id))
+          .map((doc) => ExpenseModel.fromMap(doc.data(), doc.id))
           .toList();
     });
   }

@@ -35,15 +35,15 @@ class UserRepository {
     try {
       final emailQuery = await _firestore
           .collection('users')
-          .where('email', isGreaterThanOrEqualTo: query)
-          .where('email', isLessThan: query + 'z')
+          .where('email', isLessThan: '${query}z')
+          .where('name', isLessThan: '${query}z')
           .limit(10)
           .get();
 
       final nameQuery = await _firestore
           .collection('users')
           .where('name', isGreaterThanOrEqualTo: query)
-          .where('name', isLessThan: query + 'z')
+          .where('name', isLessThan: '${query}z')
           .limit(10)
           .get();
 

@@ -8,10 +8,10 @@ class ExpenseInsights extends StatelessWidget {
   final String userId;
 
   const ExpenseInsights({
-    Key? key,
+    super.key,
     required this.expenses,
     required this.userId,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class ExpenseInsights extends StatelessWidget {
           margin: const EdgeInsets.only(bottom: 12),
           child: ListTile(
             leading: CircleAvatar(
-              backgroundColor: insight.color.withOpacity(0.1),
+              backgroundColor: insight.color.withValues(alpha: 0.1),
               child: Icon(insight.icon, color: insight.color),
             ),
             title: Text(insight.title),

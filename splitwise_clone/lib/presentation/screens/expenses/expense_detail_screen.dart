@@ -1,22 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 import '../../../data/models/expense_model.dart';
 import '../../../data/models/category_model.dart';
 import '../../../data/providers/group_provider.dart';
 import '../../../data/providers/expense_provider.dart';
 import '../../../data/providers/auth_provider.dart';
 import '../../../core/utils/currency_utils.dart';
-import '../../../core/utils/date_utils.dart';
-import '../../widgets/common/custom_button.dart';
-import '../../../core/utils/date_utils.dart' as AppDateUtils;
 
 class ExpenseDetailScreen extends StatelessWidget {
   final ExpenseModel expense;
 
   const ExpenseDetailScreen({
-    Key? key,
+    super.key,
     required this.expense,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -106,7 +104,7 @@ class ExpenseDetailScreen extends StatelessWidget {
           children: [
             // Header
             Container(
-              color: Theme.of(context).primaryColor.withOpacity(0.1),
+              color: Theme.of(context).primaryColor.withValues(alpha: 0.1),
               padding: const EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -136,7 +134,7 @@ class ExpenseDetailScreen extends StatelessWidget {
                       ),
                       backgroundColor: Color(
                         int.parse(category.color.replaceAll('#', '0xFF')),
-                      ).withOpacity(0.2),
+                      ).withValues(alpha: 0.2),
                     ),
                   ],
                 ],
@@ -158,7 +156,7 @@ class ExpenseDetailScreen extends StatelessWidget {
                   _InfoCard(
                     icon: Icons.calendar_today,
                     title: 'Дата',
-                    value: AppDateUtils.formatDateTime(expense.date),
+                    value: DateFormat('d MMMM yyyy, HH:mm').format(expense.date),
                   ),
                   if (expense.description != null) ...[
                     const SizedBox(height: 12),
@@ -220,14 +218,14 @@ class ExpenseDetailScreen extends StatelessWidget {
                         ),
                       ),
                     );
-                  }).toList(),
+                  }),
                   
                   // Your balance
                   if (currentUser != null) ...[
                     Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                        color: Theme.of(context).primaryColor.withOpacity(0.1),
+                        color: Theme.of(context).primaryColor.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Column(
@@ -283,11 +281,11 @@ class _InfoCard extends StatelessWidget {
   final String value;
 
   const _InfoCard({
-    Key? key,
+    super.key,
     required this.icon,
     required this.title,
     required this.value,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

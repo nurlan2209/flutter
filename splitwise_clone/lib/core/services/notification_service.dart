@@ -35,7 +35,7 @@ class NotificationService {
 
     // Get FCM token
     final token = await _messaging.getToken();
-    print('FCM Token: $token');
+    debugPrint('FCM Token: $token');
   }
 
   static Future<void> _showNotification({

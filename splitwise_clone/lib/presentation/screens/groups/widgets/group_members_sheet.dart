@@ -8,9 +8,9 @@ class GroupMembersSheet extends StatelessWidget {
   final GroupModel group;
 
   const GroupMembersSheet({
-    Key? key,
+    super.key,
     required this.group,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +87,7 @@ class GroupMembersSheet extends StatelessWidget {
                           if (memberRole == 'admin')
                             Chip(
                               label: const Text('Админ'),
-                              backgroundColor: Theme.of(context).primaryColor.withOpacity(0.1),
+                              backgroundColor: Theme.of(context).primaryColor.withValues(alpha: 0.1),
                             ),
                           if (isCurrentUser)
                             const Chip(

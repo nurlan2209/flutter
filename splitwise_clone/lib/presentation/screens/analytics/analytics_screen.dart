@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 import '../../../data/providers/auth_provider.dart';
 import '../../../data/providers/expense_provider.dart';
 import '../../../data/providers/group_provider.dart';
 import '../../../data/models/expense_model.dart';
 import '../../../core/utils/currency_utils.dart';
-import '../../../core/utils/date_utils.dart';
 import 'widgets/expense_pie_chart.dart';
 import 'widgets/expense_line_chart.dart';
 import 'widgets/expense_insights.dart';
-import '../../../core/utils/date_utils.dart' as AppDateUtils;
 
 class AnalyticsScreen extends StatefulWidget {
-  const AnalyticsScreen({Key? key}) : super(key: key);
+  const AnalyticsScreen({super.key});
 
   @override
   State<AnalyticsScreen> createState() => _AnalyticsScreenState();
@@ -135,7 +134,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                                   value: group.id,
                                   child: Text(group.name),
                                 );
-                              }).toList(),
+                              }),
                             ],
                             onChanged: (value) {
                               setState(() {
@@ -160,7 +159,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                                   const SizedBox(width: 8),
                                   Expanded(
                                     child: Text(
-                                    '${AppDateUtils.formatShortDate(_selectedDateRange.start)} - ${AppDateUtils.formatShortDate(_selectedDateRange.end)}',
+                                      '${DateFormat('d MMM').format(_selectedDateRange.start)} - ${DateFormat('d MMM').format(_selectedDateRange.end)}',
                                     ),
                                   ),
                                   const Icon(Icons.arrow_drop_down),
@@ -316,12 +315,11 @@ class _SummaryCard extends StatelessWidget {
   final IconData icon;
 
   const _SummaryCard({
-    Key? key,
     required this.title,
     required this.amount,
     required this.color,
     required this.icon,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

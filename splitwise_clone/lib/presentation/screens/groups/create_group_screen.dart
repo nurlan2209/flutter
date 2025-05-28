@@ -3,12 +3,11 @@ import 'package:provider/provider.dart';
 import '../../../data/providers/auth_provider.dart';
 import '../../../data/providers/group_provider.dart';
 import '../../../data/providers/user_provider.dart';
-import '../../../data/models/user_model.dart';
 import '../../widgets/common/custom_text_field.dart';
 import '../../widgets/common/custom_button.dart';
 
 class CreateGroupScreen extends StatefulWidget {
-  const CreateGroupScreen({Key? key}) : super(key: key);
+  const CreateGroupScreen({super.key});
 
   @override
   State<CreateGroupScreen> createState() => _CreateGroupScreenState();
