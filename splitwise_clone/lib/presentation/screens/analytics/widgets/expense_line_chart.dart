@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import '../../../../data/models/expense_model.dart';
 import '../../../../core/utils/currency_utils.dart';
-import 'package:intl/intl.dart';
 
 class ExpenseLineChart extends StatelessWidget {
   final List<ExpenseModel> expenses;
@@ -32,24 +31,24 @@ class ExpenseLineChart extends StatelessWidget {
               drawVerticalLine: true,
               horizontalInterval: 1000,
               getDrawingHorizontalLine: (value) {
-                return const FlLine( // ДОБАВЛЕНО: const
-                  color: Colors.grey, // УПРОСТИТЬ: убрать [300]!
+                return const FlLine(
+                  color: Colors.grey,
                   strokeWidth: 1,
                 );
               },
               getDrawingVerticalLine: (value) {
-                return const FlLine( // ДОБАВЛЕНО: const
-                  color: Colors.grey, // УПРОСТИТЬ: убрать [300]!
+                return const FlLine(
+                  color: Colors.grey,
                   strokeWidth: 1,
                 );
               },
             ),
             titlesData: FlTitlesData(
               show: true,
-              rightTitles: const AxisTitles( // ДОБАВЛЕНО: const
+              rightTitles: const AxisTitles(
                 sideTitles: SideTitles(showTitles: false),
               ),
-              topTitles: const AxisTitles( // ДОБАВЛЕНО: const
+              topTitles: const AxisTitles(
                 sideTitles: SideTitles(showTitles: false),
               ),
               bottomTitles: AxisTitles(
@@ -58,11 +57,10 @@ class ExpenseLineChart extends StatelessWidget {
                   reservedSize: 30,
                   interval: 1,
                   getTitlesWidget: (value, meta) {
-                    final date = dateRange.start.add(Duration(days: value.toInt()));
-                    return const Padding( // ДОБАВЛЕНО: const
+                    return const Padding(
                       padding: EdgeInsets.only(top: 8),
                       child: Text(
-                        'day', // УПРОСТИТЬ: убрать DateFormat
+                        'день',
                         style: TextStyle(fontSize: 12),
                       ),
                     );
@@ -77,7 +75,7 @@ class ExpenseLineChart extends StatelessWidget {
                   getTitlesWidget: (value, meta) {
                     return Text(
                       CurrencyUtils.formatAmountCompact(value, 'RUB'),
-                      style: const TextStyle(fontSize: 10), // ДОБАВЛЕНО: const
+                      style: const TextStyle(fontSize: 10),
                     );
                   },
                 ),
@@ -98,7 +96,7 @@ class ExpenseLineChart extends StatelessWidget {
                 gradient: LinearGradient(
                   colors: [
                     Theme.of(context).primaryColor,
-                    Theme.of(context).primaryColor.withValues(alpha: 0.5), // ИСПРАВЛЕНО: withOpacity -> withValues
+                    Theme.of(context).primaryColor.withValues(alpha: 0.5),
                   ],
                 ),
                 barWidth: 3,

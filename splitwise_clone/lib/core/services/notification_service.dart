@@ -1,5 +1,6 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart'; // Добавляем импорт для debugPrint
 import '../../core/utils/currency_utils.dart';
 
 class NotificationService {
@@ -35,7 +36,7 @@ class NotificationService {
 
     // Get FCM token
     final token = await _messaging.getToken();
-    debugPrint('FCM Token: $token');
+    debugPrint('FCM Token: $token'); // Теперь debugPrint доступен
   }
 
   static Future<void> _showNotification({

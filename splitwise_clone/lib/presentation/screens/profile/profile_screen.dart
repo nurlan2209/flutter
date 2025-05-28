@@ -385,7 +385,6 @@ class _StatCard extends StatelessWidget {
   final String value;
 
   const _StatCard({
-    super.key,
     required this.icon,
     required this.label,
     required this.value,

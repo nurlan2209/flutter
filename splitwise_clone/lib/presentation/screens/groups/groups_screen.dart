@@ -101,7 +101,6 @@ class _GroupCard extends StatelessWidget {
   final GroupModel group;
 
   const _GroupCard({
-    super.key,
     required this.group,
   });
 

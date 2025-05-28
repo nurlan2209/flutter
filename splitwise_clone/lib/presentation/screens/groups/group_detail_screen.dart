@@ -31,20 +31,20 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> {
   }
 
   Future<void> _loadGroupData() async {
-    if (!mounted) return; // ДОБАВИТЬ проверку
-    await context.read<GroupProvider>().selectGroup(widget.groupId);
-    
-    if (!mounted) return; // ДОБАВИТЬ проверку
-    context.read<ExpenseProvider>().loadGroupExpenses(widget.groupId);
-    
-    final userId = context.read<AuthProvider>().currentUser?.id;
-    if (userId != null && mounted) { // ДОБАВИТЬ проверку
-      context.read<ExpenseProvider>().loadSimplifiedDebts(
-        userId,
-        groupId: widget.groupId,
-      );
+      if (!mounted) return;
+      await context.read<GroupProvider>().selectGroup(widget.groupId);
+      
+      if (!mounted) return;
+      context.read<ExpenseProvider>().loadGroupExpenses(widget.groupId);
+      
+      final userId = context.read<AuthProvider>().currentUser?.id;
+      if (userId != null && mounted) {
+        context.read<ExpenseProvider>().loadSimplifiedDebts(
+          userId,
+          groupId: widget.groupId,
+        );
+      }
     }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -255,7 +255,6 @@ class _ExpenseListItem extends StatelessWidget {
   final String currentUserId;
 
   const _ExpenseListItem({
-    super.key,
     required this.expense,
     required this.currentUserId,
   });

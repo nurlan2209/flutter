@@ -199,17 +199,17 @@ class ExpenseDetailScreen extends StatelessWidget {
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
                             if (entry.key == expense.paidBy)
-                              Text(
+                              const Text( // Добавлено const
                                 'Оплатил',
-                                style: TextStyle(
+                                style: TextStyle( // TextStyle уже помечен как const
                                   fontSize: 12,
                                   color: Colors.green,
                                 ),
                               )
                             else if (amount > 0)
-                              Text(
+                              const Text( // Добавлено const
                                 'Должен',
-                                style: TextStyle(
+                                style: TextStyle( // TextStyle уже помечен как const
                                   fontSize: 12,
                                   color: Colors.red,
                                 ),
@@ -281,7 +281,6 @@ class _InfoCard extends StatelessWidget {
   final String value;
 
   const _InfoCard({
-    super.key,
     required this.icon,
     required this.title,
     required this.value,

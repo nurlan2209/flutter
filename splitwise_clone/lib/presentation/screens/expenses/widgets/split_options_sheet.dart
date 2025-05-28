@@ -258,7 +258,6 @@ class _SplitTypeChip extends StatelessWidget {
   final VoidCallback onTap;
 
   const _SplitTypeChip({
-    super.key,
     required this.label,
     required this.isSelected,
     required this.onTap,

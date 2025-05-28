@@ -176,12 +176,12 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  void _showForgotPasswordDialog() {
+void _showForgotPasswordDialog() {
     final emailController = TextEditingController();
     
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
+      builder: (dialogContext) => AlertDialog(
         title: const Text('Восстановление пароля'),
         content: Column(
           mainAxisSize: MainAxisSize.min,
@@ -200,7 +200,7 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
         actions: [
           TextButton(
-            onPressed: () => Navigator.pop(context),
+            onPressed: () => Navigator.pop(dialogContext),
             child: const Text('Отмена'),
           ),
           TextButton(
@@ -209,9 +209,9 @@ class _LoginScreenState extends State<LoginScreen> {
               if (email.isNotEmpty) {
                 try {
                   await context.read<AuthProvider>().resetPassword(email);
-                  if (mounted) {
-                    Navigator.pop(context);
-                    ScaffoldMessenger.of(context).showSnackBar(
+                  if (dialogContext.mounted) { // Используем dialogContext.mounted
+                    Navigator.pop(dialogContext);
+                    ScaffoldMessenger.of(dialogContext).showSnackBar(
                       const SnackBar(
                         content: Text('Ссылка для восстановления отправлена на email'),
                         backgroundColor: Colors.green,
@@ -219,8 +219,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     );
                   }
                 } catch (e) {
-                  if (mounted) {
-                    ScaffoldMessenger.of(context).showSnackBar(
+                  if (dialogContext.mounted) { // Используем dialogContext.mounted
+                    ScaffoldMessenger.of(dialogContext).showSnackBar(
                       SnackBar(
                         content: Text(e.toString()),
                         backgroundColor: Colors.red,
