@@ -50,7 +50,6 @@ class GroupMembersSheet extends StatelessWidget {
                       IconButton(
                         icon: const Icon(Icons.person_add),
                         onPressed: () {
-                          // TODO: Add member
                         },
                       ),
                   ],

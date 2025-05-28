@@ -82,7 +82,6 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> {
                 ),
               ],
               onSelected: (value) {
-                // TODO: Implement edit and delete
               },
             ),
         ],
@@ -152,7 +151,6 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> {
                             const SizedBox(height: 8),
                             TextButton(
                               onPressed: () {
-                                // TODO: Show detailed balances
                               },
                               child: const Text('Посмотреть детали'),
                             ),

@@ -146,6 +146,70 @@ class _LoginScreenState extends State<LoginScreen> {
                     );
                   },
                 ),
+                const SizedBox(height: 16),
+                // Divider with OR
+                Row(
+                  children: [
+                    const Expanded(child: Divider()),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Text(
+                        'ИЛИ',
+                        style: TextStyle(color: Colors.grey[600]),
+                      ),
+                    ),
+                    const Expanded(child: Divider()),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                // Google Sign In button
+                Consumer<AuthProvider>(
+                  builder: (context, authProvider, _) {
+                    return OutlinedButton.icon(
+                      onPressed: authProvider.isLoading
+                          ? null
+                          : () async {
+                              try {
+                                await authProvider.signInWithGoogle();
+                              } catch (e) {
+                                if (mounted) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(e.toString()),
+                                      backgroundColor: Colors.red,
+                                    ),
+                                  );
+                                }
+                              }
+                            },
+                      icon: Container(
+                        height: 24,
+                        width: 24,
+                        padding: const EdgeInsets.all(2),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: const Icon(
+                          Icons.g_mobiledata,
+                          size: 20,
+                          color: Colors.blue,
+                        ),
+                      ),
+                      label: const Text('Войти через Google'),
+                      style: OutlinedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 24,
+                          vertical: 12,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        side: BorderSide(color: Colors.grey[300]!),
+                      ),
+                    );
+                  },
+                ),
                 const SizedBox(height: 24),
                 // Register link
                 Row(

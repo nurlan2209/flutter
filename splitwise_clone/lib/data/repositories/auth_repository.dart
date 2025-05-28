@@ -1,10 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../models/user_model.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthRepository {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   Stream<User?> get authStateChanges => _auth.authStateChanges();
   User? get currentUser => _auth.currentUser;
@@ -74,7 +76,67 @@ class AuthRepository {
     }
   }
 
+  Future<UserModel?> signInWithGoogle() async {
+    try {
+      // Trigger the authentication flow
+      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+
+      // Obtain the auth details from the request
+      if (googleUser == null) return null;
+      
+      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+
+      // Create a new credential
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      // Once signed in, return the UserCredential
+      final userCredential = await _auth.signInWithCredential(credential);
+
+      if (userCredential.user != null) {
+        // Check if user exists in Firestore
+        final doc = await _firestore
+            .collection('users')
+            .doc(userCredential.user!.uid)
+            .get();
+
+        if (!doc.exists) {
+          // Create new user document
+          final user = UserModel(
+            id: userCredential.user!.uid,
+            email: userCredential.user!.email ?? '',
+            name: userCredential.user!.displayName ?? 'Пользователь',
+            photoUrl: userCredential.user!.photoURL,
+            friends: [],
+            groups: [],
+            createdAt: DateTime.now(),
+            settings: {
+              'theme': 'light',
+              'defaultCurrency': 'RUB',
+              'notifications': true,
+            },
+          );
+
+          await _firestore
+              .collection('users')
+              .doc(userCredential.user!.uid)
+              .set(user.toMap());
+
+          return user;
+        } else {
+          return UserModel.fromMap(doc.data()!, doc.id);
+        }
+      }
+      return null;
+    } catch (e) {
+      throw _handleAuthError(e);
+    }
+  }
+
   Future<void> signOut() async {
+    await _googleSignIn.signOut();
     await _auth.signOut();
   }
 

@@ -196,7 +196,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           userId: entry.key,
                           amount: entry.value,
                           onTap: () {
-                            // TODO: Navigate to settle debt screen
+                            
                           },
                         );
                       },
